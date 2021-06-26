@@ -15,6 +15,6 @@ class TempMemory {
   ///method to get from local memory [boolean]
   static Future<bool> getBool({String key}) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return _prefs.getBool(key);
+    return _prefs.getBool(key) ?? true;
   }
 }

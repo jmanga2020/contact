@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:contact_tracing/widget/button_widget.dart';
 import 'package:contact_tracing/screens/homsScreen.dart';
 import 'package:after_layout/after_layout.dart';

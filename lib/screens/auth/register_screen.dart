@@ -13,9 +13,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //text field state
   String fullname = '';
   String username = '';
-  String email = '';
+  // String email = '';
   String password = '';
   String error = '';
+
+  TextEditingController _fullname = new TextEditingController();
+  TextEditingController _username = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+
+  // Future<List> senddata() async {
+  //   final response =
+  //       await http.post("http://raushanjha.in/insertdata.php", body: {
+  //     "name": name.text,
+  //     "email": email.text,
+  //     "mobile": mobile.text,
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 20.0,
                     ),
                     TextFormField(
+                      controller: _fullname,
                       onChanged: (val) {
                         setState(() => fullname = val);
                       },
@@ -68,7 +82,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 30.0,
                     ),
+
+
                     TextFormField(
+                      controller: _username,
                       onChanged: (val) {
                         setState(() => username = val);
                       },
@@ -85,24 +102,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 30.0,
                     ),
+
+
+                    // TextFormField(
+                    //   onChanged: (val) {
+                    //     setState(() => email = val);
+                    //   },
+                    //   validator: (val) =>
+                    //       val.isEmpty ? 'Enter Your Email' : null,
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Email',
+                    //     contentPadding: EdgeInsets.all(20.0),
+                    //     border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(20.0),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 30.0,
+                    // ),
+
                     TextFormField(
-                      onChanged: (val) {
-                        setState(() => email = val);
-                      },
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter Your Email' : null,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        contentPadding: EdgeInsets.all(20.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    TextFormField(
+                      controller: _password,
                       onChanged: (val) {
                         setState(() => password = val);
                       },
@@ -134,8 +155,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 30.0,
                     ),
+
+
+                    // ignore: deprecated_member_use
                     RaisedButton(
-                      onPressed: () async {},
+                      onPressed: () async {
+                        // senddata;
+                      },
                       padding: EdgeInsets.all(20.0),
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,

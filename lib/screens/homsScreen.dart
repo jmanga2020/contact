@@ -1,4 +1,5 @@
-import 'package:contact_tracing/metrics/deviceMetrics.dart';
+
+import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: Metrics.deviceWidth(context) / 2,
+                      width: DeviceMetrics.deviceWidth(context) / 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,14 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Image.asset('assets/images/manymask.jpg',
-                        width: Metrics.deviceWidth(context) / 3)
-                    // Image.network(_image, width: Metrics.deviceWidth(context) / 3)
+                        width: DeviceMetrics.deviceWidth(context) / 3)
+                    // Image.network(_image, width: DeviceMetrics.deviceWidth(context) / 3)
                   ],
                 ),
               ),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                      Radius.circular(Metrics.deviceWidth(context) / 30))),
+                      Radius.circular(DeviceMetrics.deviceWidth(context) / 30))),
             ),
           ),
           ),
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: Metrics.deviceWidth(context) / 2,
+                      width: DeviceMetrics.deviceWidth(context) / 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,14 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Image.asset('assets/images/meter.jpg',
-                        width: Metrics.deviceWidth(context) / 3)
-                    // Image.network(_image, width: Metrics.deviceWidth(context) / 3)
+                        width: DeviceMetrics.deviceWidth(context) / 3)
+                    // Image.network(_image, width: DeviceMetrics.deviceWidth(context) / 3)
                   ],
                 ),
               ),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                      Radius.circular(Metrics.deviceWidth(context) / 30))),
+                      Radius.circular(DeviceMetrics.deviceWidth(context) / 30))),
             ),
           ),
           ),
@@ -128,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: Metrics.deviceWidth(context) / 2,
+                      width: DeviceMetrics.deviceWidth(context) / 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,14 +156,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Image.asset('assets/images/kazi1.png',
-                        width: Metrics.deviceWidth(context) / 3)
-                    // Image.network(_image, width: Metrics.deviceWidth(context) / 3)
+                        width: DeviceMetrics.deviceWidth(context) / 3)
+                    // Image.network(_image, width: DeviceMetrics.deviceWidth(context) / 3)
                   ],
                 ),
               ),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                      Radius.circular(Metrics.deviceWidth(context) / 30))),
+                      Radius.circular(DeviceMetrics.deviceWidth(context) / 30))),
             ),
           ),
           ),
@@ -185,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: Metrics.deviceWidth(context) / 2,
+                        width: DeviceMetrics.deviceWidth(context) / 2,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,15 +216,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Image.asset('assets/images/doct.png',
-                          width: Metrics.deviceWidth(context) / 3)
-                      //Image.network(_image, width: Metrics.deviceWidth(context) / 3)
+                          width: DeviceMetrics.deviceWidth(context) / 3)
+                      //Image.network(_image, width: DeviceMetrics.deviceWidth(context) / 3)
                     ],
                   ),
                 ),
               
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                      Radius.circular(Metrics.deviceWidth(context) / 20))),
+                      Radius.circular(DeviceMetrics.deviceWidth(context) / 20))),
             ),
           ),
           ),
