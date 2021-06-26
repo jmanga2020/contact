@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:contact_tracing/screens/animation/loaders.dart';
-import 'package:contact_tracing/screens/onBoarding%20Screen.dart';
 import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:flutter/material.dart';
 
-import 'homsScreen.dart';
+import 'animation/loaders.dart';
+import 'homeScreen.dart';
 import 'regions.dart';
+import 'splashScreen.dart';
 
 class Loader extends StatefulWidget {
   @override
