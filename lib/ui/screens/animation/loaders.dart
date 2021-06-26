@@ -10,3 +10,30 @@ class ThreeBounceLoader extends StatelessWidget {
     );
   }
 }
+
+class UniversalLoader extends StatelessWidget {
+  final String label;
+  const UniversalLoader({Key key, this.label}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SpinKitFadingCircle(
+              color: Colors.green,
+              size: 50.0,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text('${label ?? 'Loading, Please wait...'}')
+          ],
+        ),
+      ),
+    );
+  }
+}
