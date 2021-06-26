@@ -9,6 +9,7 @@ import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:flutter/material.dart';
 
 import 'homsScreen.dart';
+import 'regions.dart';
 
 class Loader extends StatefulWidget {
   @override
@@ -23,11 +24,20 @@ class _LoaderState extends State<Loader> {
         firstTime = value;
       });
     });
+    TempMemory.getBool(key: 'regions').then((value) async {
+      setState(() {
+        regionsNotSelected = value;
+      });
+    });
     Timer(Duration(seconds: 3), () async {
       if (firstTime) {
-        UserNavigation.pushReplace(context,destination: Splash());
+        UserNavigation.pushReplace(context, destination: Splash());
       } else {
-         UserNavigation.pushReplace(context,destination: HomeScreen());
+        if (regionsNotSelected) {
+          UserNavigation.pushReplace(context, destination: Regions());
+        } else {
+          UserNavigation.pushReplace(context, destination: HomeScreen());
+        }
       }
     });
     super.initState();

@@ -78,6 +78,12 @@ class _SplashState extends State<Splash> {
     super.initState();
   }
 
+  void _done() {
+    TempMemory.writeBool(key: 'splash', value: false).whenComplete(() async {
+      UserNavigation.pushReplace(context, destination: Regions());
+    });
+  }
+
   @override
   Widget build(BuildContext context) => SafeArea(
           child: IntroSlider(
@@ -88,11 +94,6 @@ class _SplashState extends State<Splash> {
         showDotIndicator: true,
         showPrevBtn: true,
         colorDot: Colors.black,
-        onDonePress: () {
-          TempMemory.writeBool(key: 'splash', value: false)
-              .whenComplete(() async {
-            UserNavigation.pushReplace(context, destination: Regions());
-          });
-        },
+        onDonePress: _done,
       ));
 }
