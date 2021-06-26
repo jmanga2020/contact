@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  List<String> _usernames = [];
+
+  Future<void> _getAllUsers() async {
+    FirebaseFirestore.instance.collection('Users').get().then((value) {
+      if (value != null) {
+        for (var i in value.docs) {
+          Map<String, dynamic> _data = i.data();
+          _usernames.add(_data['username']);
+        }
+      }
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   bool loading = false;
@@ -93,8 +107,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onChanged: (val) {
                                 setState(() => _username = val);
                               },
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter Your Username' : null,
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return 'Enter Your Username';
+                                } else if (_username.contains(val)) {
+                                  return 'Username is already in use';
+                                } else {
+                                  return null;
+                                }
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Username',
                                 contentPadding: EdgeInsets.all(20.0),
