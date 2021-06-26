@@ -1,3 +1,6 @@
+import 'package:contact_tracing/screens/regions.dart';
+import 'package:contact_tracing/services/utils/navigation.dart';
+import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -85,5 +88,11 @@ class _SplashState extends State<Splash> {
         showDotIndicator: true,
         showPrevBtn: true,
         colorDot: Colors.black,
+        onDonePress: () {
+          TempMemory.writeBool(key: 'splash', value: false)
+              .whenComplete(() async {
+            UserNavigation.pushReplace(context, destination: Regions());
+          });
+        },
       ));
 }
