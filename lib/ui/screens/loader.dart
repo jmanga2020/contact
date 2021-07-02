@@ -4,6 +4,7 @@ import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
+import 'package:contact_tracing/ui/screens/patient_records.dart';
 import 'package:flutter/material.dart';
 
 import 'animation/loaders.dart';
@@ -29,6 +30,11 @@ class _LoaderState extends State<Loader> {
         regionsNotSelected = value;
       });
     });
+    TempMemory.getString(key: 'admin').then((value) async {
+      setState(() {
+        admin = value;
+      });
+    });
     Timer(Duration(seconds: 3), () async {
       if (firstTime) {
         UserNavigation.pushReplace(context, destination: Splash());
@@ -36,7 +42,11 @@ class _LoaderState extends State<Loader> {
         if (regionsNotSelected) {
           UserNavigation.pushReplace(context, destination: Regions());
         } else {
-          UserNavigation.pushReplace(context, destination: HomeScreen());
+          if (admin.isNotEmpty) {
+            UserNavigation.pushReplace(context, destination: PatientRecords());
+          } else {
+            UserNavigation.pushReplace(context, destination: HomeScreen());
+          }
         }
       }
     });

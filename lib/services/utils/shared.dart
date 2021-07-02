@@ -5,6 +5,7 @@ class TempMemory {
   splash
   regions
   region
+  admin
   */
 
   ///method to write to local memory [boolean]
@@ -29,5 +30,10 @@ class TempMemory {
   static Future<String> getString({String key}) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     return _prefs.getString(key) ?? '';
+  }
+
+  static Future<void> remove({String key}) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.remove(key);
   }
 }

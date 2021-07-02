@@ -2,6 +2,7 @@
 
 ///check if the user has tapped getstarted (condition -> TRUE == ✔️)
 bool firstTime = true;
+String admin = '';
 
 ///check if a user has selected the residing region
 bool regionsNotSelected = true;

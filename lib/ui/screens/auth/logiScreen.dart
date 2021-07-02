@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
+import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
+import 'package:contact_tracing/ui/screens/patient_records.dart';
+import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
 
 import 'register_screen.dart';
@@ -143,13 +146,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _key.currentState.save();
                                 await _signInValidator().then((value) async {
                                   if (value) {
+                                    TempMemory.writeString(
+                                        key: 'admin', value: 'tech');
                                     setState(() {
                                       _passwordController.clear();
                                       _usernameController.clear();
                                       _loader = false;
                                     });
-                                    print('hollaaaa');
+                                    UserNavigation.pushReplace(context,
+                                        destination: PatientRecords());
+                                    showSnack(context,
+                                        content: 'You are logged In.');
                                   } else {
+                                    showSnack(context,
+                                        error: true,
+                                        content:
+                                            'Please check up your details.');
                                     setState(() {
                                       _loader = false;
                                     });

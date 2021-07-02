@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'auth/logiScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  // const HomeScreen({ Key? key }) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -109,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: () => Future.value(false),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Information'),
           centerTitle: true,
         ),
@@ -124,4 +123,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
