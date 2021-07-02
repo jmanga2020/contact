@@ -73,6 +73,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                               _ageController.clear();
                               _sex = null;
                               _id = Uuid().v4();
+                              _idController = TextEditingController(text: _id);
                               _status = null;
                               _loading = false;
                             });
