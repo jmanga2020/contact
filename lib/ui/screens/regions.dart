@@ -2,11 +2,12 @@ import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
+import 'package:contact_tracing/ui/screens/home.dart';
 import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'homeScreen.dart';
+import 'tabs/homePage.dart';
 
 class Regions extends StatefulWidget {
   @override
@@ -223,7 +224,7 @@ January 18, 2021''',
                                   TempMemory.writeString(
                                       key: 'region', value: _chosenRegion);
                                   UserNavigation.pushReplace(context,
-                                      destination: HomeScreen());
+                                      destination: Home());
                                 });
                               },
                               child: SizedBox(

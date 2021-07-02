@@ -25,6 +25,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _getAllUsers();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   bool loading = false;

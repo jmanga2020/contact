@@ -8,7 +8,8 @@ import 'package:contact_tracing/ui/screens/records/patient_records.dart';
 import 'package:flutter/material.dart';
 
 import 'animation/loaders.dart';
-import 'homeScreen.dart';
+import 'home.dart';
+import 'tabs/homePage.dart';
 import 'regions.dart';
 import 'splashScreen.dart';
 
@@ -45,7 +46,7 @@ class _LoaderState extends State<Loader> {
           if (admin.isNotEmpty) {
             UserNavigation.pushReplace(context, destination: PatientRecords());
           } else {
-            UserNavigation.pushReplace(context, destination: HomeScreen());
+            UserNavigation.pushReplace(context, destination: Home());
           }
         }
       }

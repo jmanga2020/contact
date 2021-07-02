@@ -5,7 +5,7 @@ import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'auth/logiScreen.dart';
+import '../auth/logiScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,7 +17,75 @@ class _HomeScreenState extends State<HomeScreen> {
   void _actions(int index) {
     switch (index) {
       case 0:
-        bottomSheet(context, SizedBox());
+        bottomSheet(
+            context,
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.account_balance),
+                      title: Text('Hahjvkjb.vj'),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.account_balance),
+                      title: Text('Hahjvkjb.vj'),
+                    ),
+                    Divider()
+                  ],
+                ),
+              ),
+            ));
+        break;
+      case 1:
+        bottomSheet(
+          context,
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.account_balance),
+                    title: Text('Hahjvkjb.vj'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.account_balance),
+                    title: Text('Hahjvkjb.vj'),
+                  ),
+                  Divider()
+                ],
+              ),
+            ),
+          ),
+        );
+        break;
+      case 2:
+        bottomSheet(
+          context,
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.account_balance),
+                    title: Text('Hahjvkjb.vj'),
+                  ),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.account_balance),
+                    title: Text('Hahjvkjb.vj'),
+                  ),
+                  Divider()
+                ],
+              ),
+            ),
+          ),
+        );
         break;
       case 3:
         UserNavigation.push(context, destination: LoginScreen());
@@ -103,22 +171,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => Future.value(false),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('Information'),
-          centerTitle: true,
-        ),
-        body: ListView.builder(
-          itemCount: _previews.length,
-          padding: EdgeInsets.only(top: 25.0),
-          itemBuilder: (_, i) => _homeCards(
-              index: i,
-              title: _previews[i]['title'],
-              image: _previews[i]['image']),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Information'),
+        centerTitle: true,
+      ),
+      body: ListView.builder(
+        itemCount: _previews.length,
+        padding: EdgeInsets.only(top: 25.0),
+        itemBuilder: (_, i) => _homeCards(
+            index: i,
+            title: _previews[i]['title'],
+            image: _previews[i]['image']),
       ),
     );
   }

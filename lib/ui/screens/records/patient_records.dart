@@ -4,7 +4,8 @@ import 'package:contact_tracing/services/utils/capitalize.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
-import 'package:contact_tracing/ui/screens/homeScreen.dart';
+import 'package:contact_tracing/ui/screens/home.dart';
+import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/records/details.dart';
 import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
@@ -100,7 +101,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                   onPressed: () async {
                     showPop(context, title: 'Log Out', action: () {
                       TempMemory.remove(key: 'admin');
-                      UserNavigation.push(context, destination: HomeScreen());
+                      UserNavigation.push(context, destination: Home());
                       showSnack(context, content: 'You are logged out');
                     },
                         actionLabel: 'Log Out',
@@ -132,6 +133,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                                       child: Column(
                                         children: [
                                           ListTile(
+                                            
                                             title: Text(
                                               'Sex',
                                               style: TextStyle(

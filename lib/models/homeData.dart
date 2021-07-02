@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class HomeData {
   final String title;
   final String image;
@@ -7,9 +5,6 @@ class HomeData {
   HomeData({this.title, this.image});
 
   Map<String, dynamic> toMap() {
-    return {
-      'title':title,
-      'image':image
-    };
+    return {'title': title, 'image': image};
   }
 }
