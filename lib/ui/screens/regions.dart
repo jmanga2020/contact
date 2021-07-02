@@ -82,7 +82,7 @@ class _RegionsState extends State<Regions> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: SingleChildScrollView(
-                                                                                          child: Column(
+                                              child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 crossAxisAlignment:
@@ -99,10 +99,11 @@ class _RegionsState extends State<Regions> {
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       IconButton(
-                                                          icon: Icon(Icons.clear),
+                                                          icon:
+                                                              Icon(Icons.clear),
                                                           onPressed: () =>
-                                                              UserNavigation.pop(
-                                                                  context))
+                                                              UserNavigation
+                                                                  .pop(context))
                                                     ],
                                                   ),
                                                   SizedBox(

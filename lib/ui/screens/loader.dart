@@ -4,7 +4,7 @@ import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
-import 'package:contact_tracing/ui/screens/patient_records.dart';
+import 'package:contact_tracing/ui/screens/records/patient_records.dart';
 import 'package:flutter/material.dart';
 
 import 'animation/loaders.dart';
