@@ -4,6 +4,8 @@ import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flat_icons_flutter/flat_icons_flutter.dart';
 
 import '../auth/logiScreen.dart';
 
@@ -25,15 +27,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: Icon(Icons.account_balance),
-                      title: Text('Hahjvkjb.vj'),
+                      leading: Icon(FontAwesomeIcons.headSideMask),
+                      title: Text('WEAR A MASK, MAKE WEARING A MASK A NORMAL PART OF BEING AROUND OTHER PEOPLE'),
                     ),
                     Divider(),
                     ListTile(
-                      leading: Icon(Icons.account_balance),
-                      title: Text('Hahjvkjb.vj'),
+                      leading: Icon(FontAwesomeIcons.handsWash),
+                      title: Text('REGULARLY AND THOROUGHLY CLEAN YOUR HANDS WITH AN ALCOHOL BASED HAND RUB OR WASH THEM WITH SOAP AND WATER'),
                     ),
-                    Divider()
+                    Divider(),
+                     ListTile(
+                      leading: Icon(Icons.face_outlined,),
+                      title: Text('AVOID TOUCHING YOUR EYES,NOSE AND MOUTH'),
+                    ),
+                     Divider(),
+                     ListTile(
+                      leading: Icon(FontAwesomeIcons.headSideCoughSlash),
+                      title: Text('COVER YOUR MOUTH AND NOSE WITH YOUR BENT ELBOW OR TISSUE WHEN YOU COUGH OR SNEEZE'),
+                    ),
+                     Divider(),
+                     ListTile(
+                      leading: Icon(Icons.sanitizer_outlined,),
+                      title: Text('CLEAN AND DISINFECT SURFACES FREQUENTLY ESPECIALLY THOSE WHICH ARE REGULARLY TOUCHED,SUCH AS DOOR HANDLES,FAUCETS,SHOPPING CARTS,ELEVATOR BUTTONS, PHONE SCREENS'),
+                    ),
+                     Divider(),
+                     ListTile(
+                      leading: Icon(FontAwesomeIcons.syringe),
+                      title: Text('GET VACCINATED'),
+                    ),
+
+
                   ],
                 ),
               ),
@@ -48,15 +71,25 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.account_balance),
-                    title: Text('Hahjvkjb.vj'),
+                    leading: Icon(FontAwesomeIcons.peopleArrows),
+                    title: Text('MAINTAIN AT LEAST ONE METRE DISTANCE BETWEEN YOURSELF AND OTHERS'),
                   ),
                   Divider(),
                   ListTile(
-                    leading: Icon(Icons.account_balance),
-                    title: Text('Hahjvkjb.vj'),
+                    leading: Icon(Icons.reduce_capacity_outlined,),
+                    title: Text('AVOID CROWDS AND POORLY VENTILATED SPACES'),
                   ),
-                  Divider()
+                  Divider(),
+                   ListTile(
+                    leading: Icon(FlatIcons.home),
+                    title: Text('STAY HOME AND SELF ISOLATE EVEN IF YOU HAVE MINOR SYMPTOMS SUCH AS COUGH,HEADACHE AND MILD FEVER'),
+                  ),
+                    Divider(),
+                  ListTile(
+                    leading: Icon(FontAwesomeIcons.hospital),
+                    title: Text('IF YOU HAVE A FEVER,COUGH AND DIFFICULTY BREATHING SEEK MEDICAL ATTENTION IMMEDIATELY'),
+                  ),
+
                 ],
               ),
             ),
@@ -72,13 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.account_balance),
-                    title: Text('Hahjvkjb.vj'),
+                    leading: Icon(Icons.notifications),
+                    title: Text('THE APP GIVES YOU NOTIFICATION ABOUT PEOPLE YOU CAME IN CONTACT WITH AND THEY ARE COVID 19 POSITIVE,WHICH MEANS THEY ARE INFECTED,THE APP ALSO GIVES YOU ALL THE POSSIBLE MEASURES TO FOLLOW INORDER TO PROTECT YOUR SELF AND THE ONES YOU LOVE'),
                   ),
                   Divider(),
                   ListTile(
-                    leading: Icon(Icons.account_balance),
-                    title: Text('Hahjvkjb.vj'),
+                    leading: Icon(Icons.settings),
+                    title: Text('THE APP WORKS WHERE BY WHEN YOU INTERACT WITH PEOPLE OR COME INTO CONTACT THERE IS KEY EXCHANGE MECHANISM WHERE BY EACH PERSON WILL HAVE A UNIQUE IDENTITY OF THE SOMEONE HE OR SHE CAME INTO CONTACT WITH AND WAIT FOR THE NOTIFICATION IF HE OR SHE IS INFECTED WITH COVID 19 AND HENCE TO FOLLOW THE MEASURES INSTRUCTED AND BE SAFE.'),
                   ),
                   Divider()
                 ],

@@ -1,8 +1,11 @@
+import 'package:contact_tracing/notifications/notification.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/tabs/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+String notificationId;
 
 class Home extends StatefulWidget {
   @override
@@ -56,6 +59,23 @@ class _HomeState extends State<Home> {
               ],
             ));
     return _ret;
+  }
+
+  @override
+  void initState() {
+    CloudNotifications.initNotifications();
+    _getNotificationId();
+    super.initState();
+  }
+
+  Future<void> _getNotificationId() async {
+    await CloudNotifications.subscribeUser(true);
+    await CloudNotifications.acceptNotification(accepted: true);
+    await CloudNotifications.getSubscriberId().then((value) {
+      setState(() {
+        notificationId = value;
+      });
+    });
   }
 
   @override

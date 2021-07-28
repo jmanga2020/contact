@@ -115,9 +115,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (val) {
                               if (val.isEmpty) {
                                 return 'Enter Your Username';
-                              } else if (_username.contains(val)) {
-                                return 'Username is already in use';
-                              } else {
+                               } 
+                              //else if (_username.contains(val)) {
+                              //   return 'Username is already in use';
+                              // } 
+                              else {
                                 return null;
                               }
                             },

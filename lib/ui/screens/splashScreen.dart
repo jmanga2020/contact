@@ -1,4 +1,3 @@
-
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:flutter/material.dart';
@@ -51,29 +50,22 @@ class _SplashState extends State<Splash> {
         title: "Hallow! Welcome.",
         description:
             '''with everyone contribution,contact tracing app will help us contain the virus and get us back to normal life as soon as possible.  ''',
-        pathImage: "assets/images/kazi.jpg",
-        backgroundColor: Color(0xfff5a623),
+        pathImage: "assets/images/mwanzo.jpg",
+        backgroundColor: Colors.blue,
       ),
       Slide(
         title: "Your privacy is protected",
         description:
             '''The app works without tracking your movements and without  knowing your identity or the identity of the people you come into contact with..  ''',
         pathImage: "assets/images/kazi.jpg",
-        backgroundColor: Color(0xfff5a623),
+        backgroundColor: Colors.blue,
       ),
       Slide(
-        title: "contact tracing app takes care of you.",
+        title: "Takes care of you!",
         description:
             '''if you have been in contact with a user who has subsequently tested positive for the virus,the contact tracing app notifies you and gives you instructions to protect your health and your beloved ones.  ''',
-        pathImage: "assets/images/kazi.jpg",
-        backgroundColor: Color(0xfff5a623),
-      ),
-      Slide(
-        title: "contact tracing app takes care of you.",
-        description:
-            '''if you have been in contact with a user who has subsequently tested positive for the virus,the contact tracing app notifies you and gives you instructions to protect your health and your beloved ones.  ''',
-        pathImage: "assets/images/kazi.jpg",
-        backgroundColor: Color(0xfff5a623),
+        pathImage: "assets/images/fight.jpg",
+        backgroundColor: Colors.blue,
       )
     ];
     super.initState();

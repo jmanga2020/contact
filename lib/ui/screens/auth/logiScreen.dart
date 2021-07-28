@@ -6,6 +6,7 @@ import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/screens/records/patient_records.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'register_screen.dart';
 
@@ -18,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   List<QueryDocumentSnapshot> _snapshot;
 
   Future<void> _getAllUsers() async {
-    FirebaseFirestore.instance.collection('Users').get().then((value) {
+    await FirebaseFirestore.instance.collection('Users').get().then((value) {
       setState(() {
         _snapshot = value.docs;
       });
@@ -61,6 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  _visibility() {
+    setState(() {
+      _visible = !_visible;
+    });
+  }
+
+  bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextFormField(
                               controller: _usernameController,
-                              onChanged: (val) {
+                              onChanged: (_usernameController) {
                                 setState(() {
-                                  _username = val;
+                                  _username = _usernameController;
                                 });
                               },
                               validator: (val) =>
@@ -125,15 +134,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextFormField(
                               controller: _passwordController,
-                              obscureText: true,
-                              onChanged: (val) {
+                              obscureText: _visible,
+                              onChanged: (_passwordController) {
                                 setState(() {
-                                  _password = val;
+                                  _password = _passwordController;
                                 });
                               },
                               validator: (val) =>
                                   val.isEmpty ? 'Enter Your password' : null,
                               decoration: InputDecoration(
+                                suffix: InkWell(
+                                  onTap: () => _visibility(),
+                                  child: Icon(
+                                    !_visible
+                                        ? FontAwesomeIcons.eyeSlash
+                                        : FontAwesomeIcons.eye,
+                                    size: 20,
+                                  ),
+                                ),
                                 labelText: 'Password',
                                 contentPadding: EdgeInsets.all(20.0),
                                 border: OutlineInputBorder(

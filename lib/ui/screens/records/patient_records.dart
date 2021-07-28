@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
-import 'package:contact_tracing/services/utils/capitalize.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/screens/home.dart';
-import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/records/details.dart';
 import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
@@ -56,7 +54,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                                                 title: Text(
                                                     '${snap.data.docs[i]['sex']}  -  ${snap.data.docs[i]['age']} years old'),
                                                 subtitle: Text(
-                                                    '${capitalize(snap.data.docs[i]['location'])}'),
+                                                    '${snap.data.docs[i]['location']}'),
                                                 leading: CircleAvatar(
                                                     child: Icon(
                                                       Icons.close,
@@ -133,7 +131,6 @@ class _PatientRecordsState extends State<PatientRecords> {
                                       child: Column(
                                         children: [
                                           ListTile(
-                                            
                                             title: Text(
                                               'Sex',
                                               style: TextStyle(
@@ -186,8 +183,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                             },
                             title: Text(
                                 '${snap.data.docs[i]['sex']}  -  ${snap.data.docs[i]['age']} years old'),
-                            subtitle: Text(
-                                '${capitalize(snap.data.docs[i]['location'])}'),
+                            subtitle: Text('${snap.data.docs[i]['location']}'),
                             leading: CircleAvatar(
                               child: Icon(
                                 snap.data.docs[i]['status'] == 'Negative'

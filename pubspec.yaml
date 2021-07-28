@@ -34,6 +34,11 @@ dependencies:
   intro_slider: ^3.0.1
   cloud_firestore: ^2.2.2
   uuid:
+  flutter_icons: ^1.1.0
+  font_awesome_flutter: ^9.1.0
+  flat_icons_flutter: ^1.0.2
+  flutter_blue: ^0.8.0
+  onesignal_flutter: ^3.1.0
 
 
 dev_dependencies:

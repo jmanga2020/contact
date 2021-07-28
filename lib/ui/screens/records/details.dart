@@ -1,6 +1,7 @@
 import 'package:contact_tracing/models/patientModel.dart';
 import 'package:contact_tracing/services/cloud/operations.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
+import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class _PatientDetailsState extends State<PatientDetails> {
   String _id, _age, _sex, _location, _status;
   TextEditingController _idController;
   TextEditingController _ageController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
   List<String> _sexList = ['Male', 'Female'];
   List<String> _statusList = ['Positive', 'Negative'];
   final _formKey = GlobalKey<FormState>();
@@ -69,12 +69,12 @@ class _PatientDetailsState extends State<PatientDetails> {
                                         status: _status)
                                     .toMap());
                             setState(() {
-                              _locationController.clear();
                               _ageController.clear();
                               _sex = null;
                               _id = Uuid().v4();
                               _idController = TextEditingController(text: _id);
                               _status = null;
+                              _location = null;
                               _loading = false;
                             });
                             showSnack(context,
@@ -155,6 +155,28 @@ class _PatientDetailsState extends State<PatientDetails> {
                         SizedBox(
                           height: 30.0,
                         ),
+                        Container(
+                          child: DropdownButtonFormField(
+                              isExpanded: true,
+                              hint: Text('Choose your location'),
+                              value: _location,
+                              icon: Icon(Icons.pin_drop),
+                              validator: (value) =>
+                                  value != null && value.isNotEmpty
+                                      ? null
+                                      : 'Please choose your location',
+                              onChanged: (value) {
+                                setState(() {
+                                  _location = value;
+                                });
+                              },
+                              items: tanzanianRegions
+                                  .map((e) => DropdownMenuItem(
+                                      value: e['city'],
+                                      child: Text('${e['city']}')))
+                                  .toList()),
+                        ),
+                        SizedBox(height: 30),
                         TextFormField(
                           controller: _ageController,
                           readOnly: false,
@@ -173,23 +195,6 @@ class _PatientDetailsState extends State<PatientDetails> {
                         ),
                         SizedBox(
                           height: 30.0,
-                        ),
-                        TextFormField(
-                          controller: _locationController,
-                          readOnly: false,
-                          keyboardType: TextInputType.streetAddress,
-                          onChanged: (value) => setState(() {
-                            _location = value;
-                          }),
-                          validator: (value) => value.isEmpty
-                              ? 'Please enter your location'
-                              : null,
-                          decoration: InputDecoration(
-                              labelText: 'Location',
-                              contentPadding: EdgeInsets.all(20.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              )),
                         ),
                       ],
                     )),

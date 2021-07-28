@@ -111,7 +111,7 @@ class _RegionsState extends State<Regions> {
                                                     height: 20,
                                                   ),
                                                   Text(
-                                                    'How to check that gjhfgabhkf',
+                                                    'Why we ask you to enter your home region?',
                                                     textAlign: TextAlign.start,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -125,50 +125,35 @@ class _RegionsState extends State<Regions> {
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    '''Taarifa ya robo ya pili ya mapato ya Halmashauri, iliyotolewa na Waziri wa Nchi Ofisi ya Rais-TAMISEMI
-January 21, 2021
-Orodha ya majina ya matokeo ya kidato cha nne,cha pili na darasa la nne
-January 18, 2021''',
+                                                    '''Select the region where you live in to help our Tanzanian Nation''',
                                                     textAlign: TextAlign.start,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    '''Taarifa ya robo ya pili ya mapato ya Halmashauri, iliyotolewa na Waziri wa Nchi Ofisi ya Rais-TAMISEMI
-January 21, 2021
-Orodha ya majina ya matokeo ya kidato cha nne,cha pili na darasa la nne
-January 18, 2021''',
+                                                    '''The National Health Service uses your home region details to help prevent new outbreaks,as well as to estimate how widely the app is being used across the country.''',
                                                     textAlign: TextAlign.start,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    '''Taarifa ya robo ya pili ya mapato ya Halmashauri, iliyotolewa na Waziri wa Nchi Ofisi ya Rais-TAMISEMI
-January 21, 2021
-Orodha ya majina ya matokeo ya kidato cha nne,cha pili na darasa la nne
-January 18, 2021''',
+                                                    '''you can also change your home region at any time from the app's info,we advise you to change them only if you decide to move from one region to another''',
                                                     textAlign: TextAlign.start,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    '''Taarifa ya robo ya pili ya mapato ya Halmashauri, iliyotolewa na Waziri wa Nchi Ofisi ya Rais-TAMISEMI
-January 21, 2021
-Orodha ya majina ya matokeo ya kidato cha nne,cha pili na darasa la nne
-January 18, 2021''',
+                                                    '''USE CONTACT TRACING APP TO SAVE LIVES!''',
                                                     textAlign: TextAlign.start,
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    '''Taarifa ya robo ya pili ya mapato ya Halmashauri, iliyotolewa na Waziri wa Nchi Ofisi ya Rais-TAMISEMI
-January 21, 2021
-Orodha ya majina ya matokeo ya kidato cha nne,cha pili na darasa la nne
-January 18, 2021''',
+                                                    '''THANK YOU!!!''',
                                                     textAlign: TextAlign.start,
                                                   )
                                                 ],
