@@ -1,11 +1,13 @@
 import 'package:contact_tracing/notifications/notification.dart';
+import 'package:contact_tracing/services/cloud/operations.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
+import 'package:contact_tracing/ui/screens/regions.dart';
 import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/tabs/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-String notificationId;
+String notificationId = '';
 
 class Home extends StatefulWidget {
   @override
@@ -63,8 +65,15 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    CloudNotifications.initNotifications();
-    _getNotificationId();
+    CloudNotifications.initNotifications(
+    );
+    _getNotificationId().whenComplete(() async {
+      if (notificationId.isNotEmpty) {
+        CloudOperations.addToCloud(
+            serverPath: "Notifications/$notificationId",
+            data: {'id': notificationId, 'region': chosenRegion});
+      }
+    });
     super.initState();
   }
 

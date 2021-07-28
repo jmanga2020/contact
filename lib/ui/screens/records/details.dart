@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contact_tracing/models/patientModel.dart';
+import 'package:contact_tracing/notifications/notification.dart';
 import 'package:contact_tracing/services/cloud/operations.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:uuid/uuid.dart';
+
+import '../regions.dart';
 
 class PatientDetails extends StatefulWidget {
   @override
@@ -15,19 +20,52 @@ class PatientDetails extends StatefulWidget {
 class _PatientDetailsState extends State<PatientDetails> {
   @override
   void initState() {
-    _id = Uuid().v4();
-
-    _idController = TextEditingController(text: _id);
+    _getNotificationIds();
     super.initState();
   }
 
+  List<String> _notificationIds = [];
+
+  Future<void> _getNotificationIds() async {
+    FirebaseFirestore.instance.collection('Notifications').get().then((value) {
+      if (value != null) {
+        for (var i in value.docs) {
+          Map<String, dynamic> _data = i.data();
+          if (_data['region'] == chosenRegion) {
+            _notificationIds.add(_data['id']);
+          }
+        }
+      }
+    });
+  }
+
   String _id, _age, _sex, _location, _status;
-  TextEditingController _idController;
   TextEditingController _ageController = TextEditingController();
   List<String> _sexList = ['Male', 'Female'];
   List<String> _statusList = ['Positive', 'Negative'];
   final _formKey = GlobalKey<FormState>();
   bool _loading = false;
+  bool _scanning = false;
+
+  Widget _bluetoothDevices({bool enabled = false}) {
+    return ElevatedButton(
+      child: Text(enabled ? 'Find Patient Device' : 'Power ON Bluetooth'),
+      onPressed: !enabled || _scanning
+          ? null
+          : () async {
+              setState(() {
+                _scanning = true;
+              });
+              await FlutterBlue.instance
+                  .startScan(timeout: Duration(seconds: 4));
+              FlutterBlue.instance.connectedDevices
+                  .then((value) => print(value));
+              setState(() {
+                _scanning = false;
+              });
+            },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +98,27 @@ class _PatientDetailsState extends State<PatientDetails> {
                           _formKey.currentState.save();
                           try {
                             await CloudOperations.addToCloud(
-                                serverPath: 'Records/$_id',
+                                serverPath: 'Records/${_id ?? Uuid().v4()}',
                                 data: PatientModel(
-                                        id: _id,
+                                        //TODO:put BT id here
+                                        id: _id ?? Uuid().v4(),
                                         age: _age,
                                         sex: _sex,
                                         location: _location,
                                         status: _status)
                                     .toMap());
+                            if (_status == 'Positive') {
+                              for (var i in _notificationIds) {
+                                await CloudNotifications.sendNotification(
+                                    userIds: [i],
+                                    title: 'Covid Patient',
+                                    sub: 'New user affected in  $chosenRegion',
+                                    body: 'Click for more description');
+                              }
+                            }
                             setState(() {
                               _ageController.clear();
                               _sex = null;
-                              _id = Uuid().v4();
-                              _idController = TextEditingController(text: _id);
                               _status = null;
                               _location = null;
                               _loading = false;
@@ -96,16 +142,75 @@ class _PatientDetailsState extends State<PatientDetails> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        TextFormField(
-                            controller: _idController,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: 'User Id',
-                              contentPadding: EdgeInsets.all(20.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                            )),
+                        StreamBuilder(
+                            stream: FlutterBlue.instance.state,
+                            initialData: BluetoothState.unknown,
+                            builder: (c, snapshot) {
+                              final state = snapshot.data;
+                              if (state == BluetoothState.on) {
+                                return _bluetoothDevices(enabled: true);
+                              } else {
+                                return _bluetoothDevices(enabled: false);
+                              }
+                            }),
+                        Container(
+                          color: Colors.red,
+                          width: DeviceMetrics.deviceWidth(context),
+                          height: DeviceMetrics.deviceHeight(context) / 15,
+                          child: SingleChildScrollView(
+                            child: StreamBuilder<List<BluetoothDevice>>(
+                                stream: Stream.periodic(Duration(seconds: 2))
+                                    .asyncMap((_) =>
+                                        FlutterBlue.instance.connectedDevices),
+                                initialData: [],
+                                builder: (c, snapshot) {
+                                  if (snapshot.hasData &&
+                                      snapshot.data.length != 0) {
+                                    return Column(
+                                      children: snapshot.data
+                                          .map((d) => ListTile(
+                                                title: Text(d.name),
+                                                subtitle: Text(d.id.toString()),
+                                                trailing: StreamBuilder<
+                                                    BluetoothDeviceState>(
+                                                  stream: d.state,
+                                                  initialData:
+                                                      BluetoothDeviceState
+                                                          .disconnected,
+                                                  builder: (c, snapshot) {
+                                                    if (snapshot.data ==
+                                                        BluetoothDeviceState
+                                                            .connected) {
+                                                      return RaisedButton(
+                                                        child: Text('OPEN'),
+                                                        onPressed: () {},
+                                                      );
+                                                    }
+                                                    return SizedBox();
+                                                  },
+                                                ),
+                                              ))
+                                          .toList(),
+                                    );
+                                  } else if (snapshot.data.length == 0) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                          child: Text(
+                                              'No Bluetooth Device Found!!!')),
+                                    );
+                                  } else {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                            'Please Check your Bluetooth Connection!!!'),
+                                      ),
+                                    );
+                                  }
+                                }),
+                          ),
+                        ),
                         SizedBox(
                           height: 30.0,
                         ),

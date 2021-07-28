@@ -13,9 +13,9 @@ class Regions extends StatefulWidget {
   @override
   _RegionsState createState() => _RegionsState();
 }
-
+  String chosenRegion = '';
 class _RegionsState extends State<Regions> {
-  String _chosenRegion = '';
+
   Widget _regions({String value, String title, onChanged, groupValue}) {
     return RadioListTile(
         title: Text('$title'),
@@ -175,11 +175,11 @@ class _RegionsState extends State<Regions> {
                                 (index) => _regions(
                                     title: '${tanzanianRegions[index]['city']}',
                                     value: '${tanzanianRegions[index]['city']}',
-                                    groupValue: _chosenRegion,
+                                    groupValue: chosenRegion,
                                     onChanged: (value) {
                                       setState(() {
                                         if (value != null) {
-                                          _chosenRegion = value;
+                                          chosenRegion = value;
                                         }
                                       });
                                     })))
@@ -188,7 +188,7 @@ class _RegionsState extends State<Regions> {
                   ],
                 ),
               ),
-              _chosenRegion.isEmpty
+              chosenRegion.isEmpty
                   ? SizedBox()
                   : Positioned(
                       bottom: 0,
@@ -207,7 +207,7 @@ class _RegionsState extends State<Regions> {
                                     regionsNotSelected = false;
                                   });
                                   TempMemory.writeString(
-                                      key: 'region', value: _chosenRegion);
+                                      key: 'region', value: chosenRegion);
                                   UserNavigation.pushReplace(context,
                                       destination: Home());
                                 });

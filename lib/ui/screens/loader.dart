@@ -31,6 +31,11 @@ class _LoaderState extends State<Loader> {
         regionsNotSelected = value;
       });
     });
+    TempMemory.getString(key: 'region').then((value) async {
+      setState(() {
+        chosenRegion = value;
+      });
+    });
     TempMemory.getString(key: 'admin').then((value) async {
       setState(() {
         admin = value;
