@@ -69,6 +69,14 @@ class _PatientDetailsState extends State<PatientDetails> {
     );
   }
 
+  Future<void> _notify(i)async{
+        await CloudNotifications.sendNotification(
+                                    userIds: [i],
+                                    title: 'Covid Patient',
+                                    sub: 'New user affected in  $chosenRegion',
+                                    body: 'Click for more description');
+  }
+
   @override
   Widget build(BuildContext context) {
     return _loading
@@ -111,11 +119,11 @@ class _PatientDetailsState extends State<PatientDetails> {
                                     .toMap());
                             if (_status == 'Positive') {
                               for (var i in _notificationIds) {
-                                await CloudNotifications.sendNotification(
-                                    userIds: [i],
-                                    title: 'Covid Patient',
-                                    sub: 'New user affected in  $chosenRegion',
-                                    body: 'Click for more description');
+                                try{
+                                  _notify(i);
+                                }catch(e){
+                                  _notify(i);
+                                }
                               }
                             }
                             setState(() {
