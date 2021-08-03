@@ -47,6 +47,8 @@ class _PatientDetailsState extends State<PatientDetails> {
   bool _loading = false;
   bool _scanning = false;
 
+
+
   Widget _bluetoothDevices({bool enabled = false}) {
     return ElevatedButton(
       child: Text(enabled ? 'Find Patient Device' : 'Power ON Bluetooth'),
@@ -56,9 +58,9 @@ class _PatientDetailsState extends State<PatientDetails> {
               setState(() {
                 _scanning = true;
               });
-              await FlutterBlue.instance
+              await blue
                   .startScan(timeout: Duration(seconds: 4));
-              FlutterBlue.instance.connectedDevices
+              blue.connectedDevices
                   .then((value) => print(value));
               setState(() {
                 _scanning = false;
@@ -143,7 +145,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                     child: Column(
                       children: [
                         StreamBuilder(
-                            stream: FlutterBlue.instance.state,
+                            stream: blue.state,
                             initialData: BluetoothState.unknown,
                             builder: (c, snapshot) {
                               final state = snapshot.data;
@@ -161,7 +163,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                             child: StreamBuilder<List<BluetoothDevice>>(
                                 stream: Stream.periodic(Duration(seconds: 2))
                                     .asyncMap((_) =>
-                                        FlutterBlue.instance.connectedDevices),
+                                        blue.connectedDevices),
                                 initialData: [],
                                 builder: (c, snapshot) {
                                   if (snapshot.hasData &&
