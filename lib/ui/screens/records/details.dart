@@ -9,10 +9,9 @@ import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-import '../loader.dart';
+import '../home.dart';
 import '../regions.dart';
 
 class PatientDetails extends StatefulWidget {
@@ -31,10 +30,7 @@ class _PatientDetailsState extends State<PatientDetails> {
 
   //bluetooth
   BluetoothState _bluetoothState = BluetoothState.UNKNOWN;
-  String _address = "...";
-  String _name = "...";
-  BluetoothDevice _chosenId;
-  Timer _discoverableTimeoutTimer;
+  Map<String, dynamic> _chosenId = Map();
   StreamSubscription<BluetoothDiscoveryResult> _streamSubscription;
   List<BluetoothDiscoveryResult> _results =
       List<BluetoothDiscoveryResult>.empty(growable: true);
@@ -54,20 +50,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       }
       await Future.delayed(Duration(milliseconds: 0xDD));
       return true;
-    }).then((_) {
-      // Update the address field
-      FlutterBluetoothSerial.instance.address.then((address) {
-        setState(() {
-          _address = address;
-        });
-      });
     });
-
-    FlutterBluetoothSerial.instance.name.then((name) {
-      setState(() {
-        _name = name;
-      });
-    }).catchError((onError) => print('Err: BTnAME $onError'));
 
     // Listen for futher state changes
     FlutterBluetoothSerial.instance
@@ -75,9 +58,6 @@ class _PatientDetailsState extends State<PatientDetails> {
         .listen((BluetoothState state) {
       setState(() {
         _bluetoothState = state;
-
-        // Discoverable mode is disabled when Bluetooth gets disabled
-        _discoverableTimeoutTimer = null;
       });
     });
   }
@@ -93,7 +73,9 @@ class _PatientDetailsState extends State<PatientDetails> {
       if (value != null) {
         for (var i in value.docs) {
           Map<String, dynamic> _data = i.data();
-          if (_data['region'] == chosenRegion) {
+          if (_data['region'] == chosenRegion &&
+              //send for all not me!
+              _data['bt'] != deviceAddress) {
             _notificationIds.add(_data['id']);
           }
         }
@@ -101,7 +83,7 @@ class _PatientDetailsState extends State<PatientDetails> {
     });
   }
 
-  String _id, _age, _sex, _location, _status;
+  String _age, _sex, _location, _status;
   TextEditingController _ageController = TextEditingController();
   List<String> _sexList = ['Male', 'Female'];
   List<String> _statusList = ['Positive', 'Negative'];
@@ -129,7 +111,7 @@ class _PatientDetailsState extends State<PatientDetails> {
   Future<void> _discoveredDevices() async {
     _results?.clear();
     _streamSubscription?.cancel();
-    _chosenId = null;
+    _chosenId?.clear();
     _streamSubscription =
         FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
       setState(() {
@@ -205,10 +187,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                           _formKey.currentState.save();
                           try {
                             await CloudOperations.addToCloud(
-                                serverPath: 'Records/${_id ?? Uuid().v4()}',
+                                serverPath: 'Records/${_chosenId['address']}',
                                 data: PatientModel(
-                                        //TODO:put BT id here
-                                        id: _id ?? Uuid().v4(),
+                                        id: _chosenId['address'],
                                         age: _age,
                                         sex: _sex,
                                         location: _location,
@@ -252,6 +233,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                       child: Form(
                           key: _formKey,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               _bluetoothState.isEnabled
                                   ? _bluetoothDevices(enabled: true)
@@ -274,16 +256,15 @@ class _PatientDetailsState extends State<PatientDetails> {
                                               itemBuilder: (_, i) => ListTile(
                                                     onTap: () {
                                                       setState(() {
-                                                        _chosenId =
-                                                            BluetoothDevice(
-                                                                name:
-                                                                    _results[i]
-                                                                        .device
-                                                                        .name,
-                                                                address:
-                                                                    _results[i]
-                                                                        .device
-                                                                        .address);
+                                                        _chosenId.addAll({
+                                                          'name': _results[i]
+                                                              .device
+                                                              .name,
+                                                          'address': _results[i]
+                                                              .device
+                                                              .address
+                                                        });
+                                                        _results.clear();
                                                       });
                                                     },
                                                     title: Text(
@@ -294,68 +275,16 @@ class _PatientDetailsState extends State<PatientDetails> {
                                         ),
                                       ),
                                     )
-                                  : _chosenId != null
-                                      ? Text(
-                                          'Selected Bluetooth Device: ${_chosenId.name}')
-                                      : SizedBox()
-                              // Container(
-                              //   color: Colors.red,
-                              //   width: DeviceMetrics.deviceWidth(context),
-                              //   height: DeviceMetrics.deviceHeight(context) / 15,
-                              //   child: SingleChildScrollView(
-                              //     child: StreamBuilder<List<BluetoothDevice>>(
-                              //         stream: Stream.periodic(Duration(seconds: 2))
-                              //             .asyncMap((_) => blue.connectedDevices),
-                              //         initialData: [],
-                              //         builder: (c, snapshot) {
-                              //           if (snapshot.hasData &&
-                              //               snapshot.data.length != 0) {
-                              //             return Column(
-                              //               children: snapshot.data
-                              //                   .map((d) => ListTile(
-                              //                         title: Text(d.name),
-                              //                         subtitle: Text(d.id.toString()),
-                              //                         trailing: StreamBuilder<
-                              //                             BluetoothDeviceState>(
-                              //                           stream: d.state,
-                              //                           initialData:
-                              //                               BluetoothDeviceState
-                              //                                   .disconnected,
-                              //                           builder: (c, snapshot) {
-                              //                             if (snapshot.data ==
-                              //                                 BluetoothDeviceState
-                              //                                     .connected) {
-                              //                               return RaisedButton(
-                              //                                 child: Text('OPEN'),
-                              //                                 onPressed: () {},
-                              //                               );
-                              //                             }
-                              //                             return SizedBox();
-                              //                           },
-                              //                         ),
-                              //                       ))
-                              //                   .toList(),
-                              //             );
-                              //           } else if (snapshot.data.length == 0) {
-                              //             return Padding(
-                              //               padding: const EdgeInsets.all(8.0),
-                              //               child: Center(
-                              //                   child: Text(
-                              //                       'No Bluetooth Device Found!!!')),
-                              //             );
-                              //           } else {
-                              //             return Padding(
-                              //               padding: const EdgeInsets.all(8.0),
-                              //               child: Center(
-                              //                 child: Text(
-                              //                     'Please Check your Bluetooth Connection!!!'),
-                              //               ),
-                              //             );
-                              //           }
-                              //         }),
-                              //   ),
-                              // ),
-                              ,
+                                  : _chosenId.length != 0
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 15.0),
+                                          child: Text(
+                                            'Selected Bluetooth Device: ${_chosenId['name']}',
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        )
+                                      : SizedBox(),
                               SizedBox(
                                 height: 30.0,
                               ),

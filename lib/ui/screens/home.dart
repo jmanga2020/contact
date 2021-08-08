@@ -6,6 +6,7 @@ import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/tabs/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 String notificationId = '';
 
@@ -13,6 +14,8 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
+String deviceAddress;
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
@@ -65,13 +68,21 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    CloudNotifications.initNotifications(
-    );
+    FlutterBluetoothSerial.instance.address.then((address) {
+      setState(() {
+        deviceAddress = address;
+      });
+    });
+    CloudNotifications.initNotifications();
     _getNotificationId().whenComplete(() async {
       if (notificationId.isNotEmpty) {
         CloudOperations.addToCloud(
             serverPath: "Notifications/$notificationId",
-            data: {'id': notificationId, 'region': chosenRegion});
+            data: {
+              'id': notificationId,
+              'bt': deviceAddress,
+              'region': chosenRegion
+            });
       }
     });
     super.initState();
