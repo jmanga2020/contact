@@ -186,36 +186,45 @@ class _PatientDetailsState extends State<PatientDetails> {
                           });
                           _formKey.currentState.save();
                           try {
-                            await CloudOperations.addToCloud(
-                                serverPath: 'Records/${_chosenId['address']}',
-                                data: PatientModel(
-                                        id: _chosenId['address'],
-                                        age: _age,
-                                        sex: _sex,
-                                        location: _location,
-                                        status: _status)
-                                    .toMap());
-                            if (_status == 'Positive') {
-                              for (var i in _notificationIds) {
-                                try {
-                                  _notify(i);
-                                } catch (e) {
-                                  _notify(i);
+                            if (_chosenId.length != 0) {
+                              await CloudOperations.addToCloud(
+                                  serverPath: 'Records/${_chosenId['address']}',
+                                  data: PatientModel(
+                                          id: _chosenId['address'],
+                                          age: _age,
+                                          sex: _sex,
+                                          location: _location,
+                                          status: _status)
+                                      .toMap());
+                              if (_status == 'Positive') {
+                                for (var i in _notificationIds) {
+                                  try {
+                                    _notify(i);
+                                  } catch (e) {
+                                    _notify(i);
+                                  }
                                 }
                               }
+                              setState(() {
+                                _ageController.clear();
+                                _sex = null;
+                                _status = null;
+                                _location = null;
+                                _loading = false;
+                              });
+                              showSnack(context,
+                                  content: 'Patient Details Submitted');
+                            } else {
+                              showSnack(context,
+                                  error: true,
+                                  content:
+                                      'Please Pick A Patient Bluetooth ID');
                             }
-                            setState(() {
-                              _ageController.clear();
-                              _sex = null;
-                              _status = null;
-                              _location = null;
-                              _loading = false;
-                            });
-                            showSnack(context,
-                                content: 'Patient Details submitted');
                           } catch (e) {
                             showSnack(context,
-                                error: true, content: 'Please try again later');
+                                error: true,
+                                content:
+                                    'Submission Failed Please Try Again Later');
                           }
                         }
                       }),
@@ -280,7 +289,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                           padding:
                                               const EdgeInsets.only(top: 15.0),
                                           child: Text(
-                                            'Selected Bluetooth Device: ${_chosenId['name']}',
+                                            'Selected Bluetooth Device: ${_chosenId['name'] ?? 'Unknown'}',
                                             textAlign: TextAlign.start,
                                           ),
                                         )

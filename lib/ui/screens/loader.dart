@@ -6,7 +6,6 @@ import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/records/patient_records.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 
 import 'animation/loaders.dart';
 import 'home.dart';
@@ -19,14 +18,10 @@ class Loader extends StatefulWidget {
   _LoaderState createState() => _LoaderState();
 }
 
-FlutterBlue blue;
 
 class _LoaderState extends State<Loader> {
   @override
   void initState() {
-    setState((){
-      blue = FlutterBlue.instance;
-    });
     TempMemory.getBool(key: 'splash').then((value) async {
       setState(() {
         firstTime = value;
