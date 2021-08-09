@@ -42,6 +42,11 @@ class _LoaderState extends State<Loader> {
         admin = value;
       });
     });
+      TempMemory.getString(key: 'notify').then((value) async {
+      setState(() {
+        notify = value;
+      });
+    });
     Timer(Duration(seconds: 3), () async {
       if (firstTime) {
         UserNavigation.pushReplace(context, destination: Splash());

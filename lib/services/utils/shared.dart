@@ -6,6 +6,7 @@ class TempMemory {
   regions
   region
   admin
+  notify
   */
 
   ///method to write to local memory [boolean]

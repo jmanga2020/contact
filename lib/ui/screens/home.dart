@@ -1,6 +1,8 @@
 import 'package:contact_tracing/notifications/notification.dart';
 import 'package:contact_tracing/services/cloud/operations.dart';
+import 'package:contact_tracing/services/constants/variables.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
+import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/regions.dart';
 import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
 import 'package:contact_tracing/ui/screens/tabs/settings.dart';
@@ -73,18 +75,21 @@ class _HomeState extends State<Home> {
         deviceAddress = address;
       });
     });
-    CloudNotifications.initNotifications();
-    _getNotificationId().whenComplete(() async {
-      if (notificationId.isNotEmpty) {
-        CloudOperations.addToCloud(
-            serverPath: "Notifications/$notificationId",
-            data: {
-              'id': notificationId,
-              'bt': deviceAddress,
-              'region': chosenRegion
-            });
-      }
-    });
+    if (notify.isEmpty) {
+      CloudNotifications.initNotifications();
+      _getNotificationId().whenComplete(() async {
+        if (notificationId.isNotEmpty) {
+          CloudOperations.addToCloud(
+              serverPath: "Notifications/$notificationId",
+              data: {
+                'id': notificationId,
+                'bt': deviceAddress,
+                'region': chosenRegion
+              });
+          TempMemory.writeString(key: 'notify', value: notificationId);
+        }
+      });
+    }
     super.initState();
   }
 
