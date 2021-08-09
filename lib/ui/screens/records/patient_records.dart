@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contact_tracing/services/cloud/operations.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
@@ -30,67 +31,43 @@ class _PatientRecordsState extends State<PatientRecords> {
                   onPressed: () {
                     bottomSheet(
                         context,
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 15.0,
-                                  bottom:
-                                      DeviceMetrics.deviceHeight(context) / 20,
-                                  left: 0,
-                                  right: 0),
-                              child: StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('Records')
-                                      .where('status', isEqualTo: 'Positive')
-                                      .snapshots(),
-                                  builder:
-                                      (_, AsyncSnapshot<QuerySnapshot> snap) {
-                                    if (snap.hasData) {
-                                      return ListView.separated(
-                                          itemCount: snap.data.docs.length,
-                                          separatorBuilder: (_, i) => Divider(),
-                                          itemBuilder: (_, i) => ListTile(
-                                                title: Text(
-                                                    '${snap.data.docs[i]['sex']}  -  ${snap.data.docs[i]['age']} years old'),
-                                                subtitle: Text(
-                                                    '${snap.data.docs[i]['location']}'),
-                                                leading: CircleAvatar(
-                                                    child: Icon(
-                                                      Icons.close,
-                                                      color: Colors.white,
-                                                    ),
-                                                    backgroundColor:
-                                                        Colors.red),
-                                              ));
-                                    } else if (snap.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return UniversalLoader(
-                                        label: 'Loading ...',
-                                      );
-                                    } else {
-                                      return Center(
-                                          child: Text('Error Occured'));
-                                    }
-                                  }),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              child: Container(
-                                height:
-                                    DeviceMetrics.deviceHeight(context) / 20,
-                                color: Colors.teal,
-                                width: DeviceMetrics.deviceWidth(context),
-                                child: OutlinedButton(
-                                    onPressed: () {},
-                                    child: Center(
-                                        child: Text(
-                                      'SEND DATA',
-                                      style: TextStyle(color: Colors.white),
-                                    ))),
-                              ),
-                            )
-                          ],
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 15.0,
+                              bottom: DeviceMetrics.deviceHeight(context) / 20,
+                              left: 0,
+                              right: 0),
+                          child: StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Records')
+                                  .where('status', isEqualTo: 'Positive')
+                                  .snapshots(),
+                              builder: (_, AsyncSnapshot<QuerySnapshot> snap) {
+                                if (snap.hasData) {
+                                  return ListView.separated(
+                                      itemCount: snap.data.docs.length,
+                                      separatorBuilder: (_, i) => Divider(),
+                                      itemBuilder: (_, i) => ListTile(
+                                            title: Text(
+                                                '${snap.data.docs[i]['sex']}  -  ${snap.data.docs[i]['age']} years old'),
+                                            subtitle: Text(
+                                                '${snap.data.docs[i]['location']}'),
+                                            leading: CircleAvatar(
+                                                child: Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                ),
+                                                backgroundColor: Colors.red),
+                                          ));
+                                } else if (snap.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return UniversalLoader(
+                                    label: 'Loading ...',
+                                  );
+                                } else {
+                                  return Center(child: Text('Error Occured'));
+                                }
+                              }),
                         ));
                   }),
               IconButton(
@@ -99,6 +76,9 @@ class _PatientRecordsState extends State<PatientRecords> {
                   onPressed: () async {
                     showPop(context, title: 'Log Out', action: () {
                       TempMemory.remove(key: 'admin');
+                      CloudOperations.deleteFromCloud(
+                          serverPath: 'Records/$deviceAddress');
+                      UserNavigation.pop(context);
                       UserNavigation.push(context, destination: Home());
                       showSnack(context, content: 'You are logged out');
                     },

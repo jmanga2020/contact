@@ -3,8 +3,9 @@ import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_tracing/services/cloud/operations.dart';
-import 'package:uuid/uuid.dart';
 import 'package:contact_tracing/models/user.dart';
+
+import '../home.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List<String> _usernames = [];
 
   Future<void> _getAllUsers() async {
-    FirebaseFirestore.instance.collection('Users').get().then((value) {
+    FirebaseFirestore.instance.collection('LabTechs').get().then((value) {
       if (value != null) {
         for (var i in value.docs) {
           Map<String, dynamic> _data = i.data();
@@ -115,10 +116,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (val) {
                               if (val.isEmpty) {
                                 return 'Enter Your Username';
-                               } 
+                              }
                               //else if (_username.contains(val)) {
                               //   return 'Username is already in use';
-                              // } 
+                              // }
                               else {
                                 return null;
                               }
@@ -200,12 +201,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   _isLoading = true;
                                 });
                                 _formKey.currentState.save();
-                                var _id = Uuid().v4();
+
                                 try {
                                   await CloudOperations.addToCloud(
-                                      serverPath: 'Users/$_id',
+                                      serverPath: 'LabTechs/$deviceAddress',
                                       data: User(
-                                              id: _id,
+                                              id: deviceAddress,
                                               name: _fullname,
                                               password: _password,
                                               username: _username)

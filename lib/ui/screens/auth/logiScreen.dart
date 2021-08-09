@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   List<QueryDocumentSnapshot> _snapshot;
 
   Future<void> _getAllUsers() async {
-    await FirebaseFirestore.instance.collection('Users').get().then((value) {
+    await FirebaseFirestore.instance.collection('LabTechs').get().then((value) {
       setState(() {
         _snapshot = value.docs;
       });
