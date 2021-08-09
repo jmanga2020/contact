@@ -76,6 +76,7 @@ class _HomeState extends State<Home> {
       });
     });
     if (notify.isEmpty) {
+      print('Notify empty');
       CloudNotifications.initNotifications();
       _getNotificationId().whenComplete(() async {
         if (notificationId.isNotEmpty) {
@@ -89,6 +90,8 @@ class _HomeState extends State<Home> {
           TempMemory.writeString(key: 'notify', value: notificationId);
         }
       });
+    } else {
+      print('Notify $notify');
     }
     super.initState();
   }

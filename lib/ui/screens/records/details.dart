@@ -197,6 +197,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                 }
                                 setState(() {
                                   _ageController.clear();
+                                  _chosenId.clear();
                                   _sex = null;
                                   _status = null;
                                   _location = null;

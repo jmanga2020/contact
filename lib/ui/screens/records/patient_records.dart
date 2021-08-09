@@ -76,6 +76,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                   onPressed: () async {
                     showPop(context, title: 'Log Out', action: () {
                       TempMemory.remove(key: 'admin');
+                      TempMemory.remove(key: 'notify');
                       CloudOperations.deleteFromCloud(
                           serverPath: 'Notifications/$deviceAddress');
                       UserNavigation.pop(context);
