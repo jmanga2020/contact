@@ -21,7 +21,6 @@ class PatientDetails extends StatefulWidget {
 class _PatientDetailsState extends State<PatientDetails> {
   @override
   void initState() {
-    _getNotificationIds();
     _requestDiscoverable();
     _blueInit();
     super.initState();
@@ -187,6 +186,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                             status: _status)
                                         .toMap());
                                 if (_status == 'Positive') {
+                                  await _getNotificationIds();
                                   for (var i in _notificationIds) {
                                     try {
                                       _notify(i);
