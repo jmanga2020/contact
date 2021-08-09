@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 import '../home.dart';
-import '../regions.dart';
 
 class PatientDetails extends StatefulWidget {
   @override
@@ -73,7 +72,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       if (value != null) {
         for (var i in value.docs) {
           Map<String, dynamic> _data = i.data();
-          if (_data['region'] == chosenRegion &&
+          if (_data['region'] == _location &&
               //send for all not me!
               _data['bt'] != deviceAddress) {
             _notificationIds.add(_data['id']);
@@ -152,7 +151,7 @@ class _PatientDetailsState extends State<PatientDetails> {
     await CloudNotifications.sendNotification(
         userIds: [i],
         title: 'Covid Patient',
-        sub: 'New user affected in  $chosenRegion',
+        sub: 'New user affected in  $_location',
         body: 'Click for more description');
   }
 
@@ -187,33 +186,40 @@ class _PatientDetailsState extends State<PatientDetails> {
                           _formKey.currentState.save();
                           try {
                             if (_chosenId.length != 0) {
-                              await CloudOperations.addToCloud(
-                                  serverPath: 'Records/${_chosenId['address']}',
-                                  data: PatientModel(
-                                          id: _chosenId['address'],
-                                          age: _age,
-                                          sex: _sex,
-                                          location: _location,
-                                          status: _status)
-                                      .toMap());
-                              if (_status == 'Positive') {
-                                for (var i in _notificationIds) {
-                                  try {
-                                    _notify(i);
-                                  } catch (e) {
-                                    _notify(i);
+                              if (_location != null) {
+                                await CloudOperations.addToCloud(
+                                    serverPath:
+                                        'Records/${_chosenId['address']}',
+                                    data: PatientModel(
+                                            id: _chosenId['address'],
+                                            age: _age,
+                                            sex: _sex,
+                                            location: _location,
+                                            status: _status)
+                                        .toMap());
+                                if (_status == 'Positive') {
+                                  for (var i in _notificationIds) {
+                                    try {
+                                      _notify(i);
+                                    } catch (e) {
+                                      _notify(i);
+                                    }
                                   }
                                 }
+                                setState(() {
+                                  _ageController.clear();
+                                  _sex = null;
+                                  _status = null;
+                                  _location = null;
+                                  _loading = false;
+                                });
+                                showSnack(context,
+                                    content: 'Patient Details Submitted');
+                              } else {
+                                showSnack(context,
+                                    error: true,
+                                    content: 'Please Choose Patient Residence');
                               }
-                              setState(() {
-                                _ageController.clear();
-                                _sex = null;
-                                _status = null;
-                                _location = null;
-                                _loading = false;
-                              });
-                              showSnack(context,
-                                  content: 'Patient Details Submitted');
                             } else {
                               showSnack(context,
                                   error: true,
@@ -277,7 +283,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                                       });
                                                     },
                                                     title: Text(
-                                                        '${i + 1}.${_results[i].device.name ?? 'Unknown'}'),
+                                                        '${i + 1}. ${_results[i].device.name ?? 'Unknown'}'),
                                                     subtitle: Text(
                                                         '${_results[i].device.address}'),
                                                   )),
@@ -346,13 +352,13 @@ class _PatientDetailsState extends State<PatientDetails> {
                               Container(
                                 child: DropdownButtonFormField(
                                     isExpanded: true,
-                                    hint: Text('Choose your location'),
+                                    hint: Text('Choose patient location'),
                                     value: _location,
                                     icon: Icon(Icons.pin_drop),
                                     validator: (value) =>
                                         value != null && value.isNotEmpty
                                             ? null
-                                            : 'Please choose your location',
+                                            : 'Please choose patient location',
                                     onChanged: (value) {
                                       setState(() {
                                         _location = value;

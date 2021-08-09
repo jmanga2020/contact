@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
       _getNotificationId().whenComplete(() async {
         if (notificationId.isNotEmpty) {
           CloudOperations.addToCloud(
-              serverPath: "Notifications/$notificationId",
+              serverPath: "Notifications/$deviceAddress",
               data: {
                 'id': notificationId,
                 'bt': deviceAddress,

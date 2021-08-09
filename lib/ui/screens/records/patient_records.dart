@@ -77,7 +77,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                     showPop(context, title: 'Log Out', action: () {
                       TempMemory.remove(key: 'admin');
                       CloudOperations.deleteFromCloud(
-                          serverPath: 'Records/$deviceAddress');
+                          serverPath: 'Notifications/$deviceAddress');
                       UserNavigation.pop(context);
                       UserNavigation.push(context, destination: Home());
                       showSnack(context, content: 'You are logged out');
