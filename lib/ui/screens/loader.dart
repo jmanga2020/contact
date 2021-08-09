@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import 'animation/loaders.dart';
 import 'home.dart';
-import 'tabs/homePage.dart';
 import 'regions.dart';
 import 'splashScreen.dart';
 

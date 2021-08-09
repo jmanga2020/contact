@@ -136,17 +136,6 @@ class _PatientDetailsState extends State<PatientDetails> {
     super.dispose();
   }
 
-  Future<dynamic> _autoPair() async {
-    FlutterBluetoothSerial.instance
-        .setPairingRequestHandler((BluetoothPairingRequest request) {
-      print("Trying to auto-pair with Pin 1234");
-      if (request.pairingVariant == PairingVariant.Pin) {
-        return Future.value("1234");
-      }
-      return Future.value(null);
-    });
-  }
-
   Future<void> _notify(i) async {
     await CloudNotifications.sendNotification(
         userIds: [i],

@@ -7,7 +7,6 @@ import 'package:contact_tracing/ui/widgets/bottom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'tabs/homePage.dart';
 
 class Regions extends StatefulWidget {
   @override
