@@ -35,7 +35,6 @@ class _PatientDetailsState extends State<PatientDetails> {
       List<BluetoothDiscoveryResult>.empty(growable: true);
 
   Future<void> _blueInit() async {
-    // Get current state
     FlutterBluetoothSerial.instance.state.then((state) {
       setState(() {
         _bluetoothState = state;
@@ -43,7 +42,6 @@ class _PatientDetailsState extends State<PatientDetails> {
     });
 
     Future.doWhile(() async {
-      // Wait if adapter not enabled
       if ((await FlutterBluetoothSerial.instance.isEnabled) ?? false) {
         return false;
       }
@@ -51,7 +49,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       return true;
     });
 
-    // Listen for futher state changes
+
     FlutterBluetoothSerial.instance
         .onStateChanged()
         .listen((BluetoothState state) {

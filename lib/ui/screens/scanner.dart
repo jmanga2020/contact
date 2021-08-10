@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:contact_tracing/services/utils/blue.dart';
+import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
+import 'package:contact_tracing/ui/screens/scannedUsers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
@@ -91,8 +93,19 @@ class _ScannerState extends State<Scanner> {
               ? Scrollbar(
                   child: ListView.separated(
                       itemBuilder: (_, i) => ListTile(
+                            onTap: () {
+                              UserNavigation.push(context,
+                                  destination: ScannedUser(
+                                    userId: _results[i].device.address,
+                                  ));
+                            },
                             trailing: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  UserNavigation.push(context,
+                                      destination: ScannedUser(
+                                        userId: _results[i].device.address,
+                                      ));
+                                },
                                 icon: Icon(Icons.arrow_forward_sharp)),
                             subtitle: Text('${_results[i].device.address}'),
                             title: Text(
