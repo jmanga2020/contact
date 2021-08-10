@@ -107,7 +107,8 @@ class _ScannerState extends State<Scanner> {
                                       ));
                                 },
                                 icon: Icon(Icons.arrow_forward_sharp)),
-                            subtitle: Text('${_results[i].device.address}'),
+                            subtitle: Text(
+                                '${BluetoothMechanisim.macMask(address: _results[i].device.address)}'),
                             title: Text(
                                 '${i + 1}. ${_results[i].device.name ?? 'Unknown'}'),
                           ),

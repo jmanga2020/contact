@@ -49,7 +49,6 @@ class _PatientDetailsState extends State<PatientDetails> {
       return true;
     });
 
-
     FlutterBluetoothSerial.instance
         .onStateChanged()
         .listen((BluetoothState state) {
@@ -270,7 +269,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                                     title: Text(
                                                         '${i + 1}. ${_results[i].device.name ?? 'Unknown'}'),
                                                     subtitle: Text(
-                                                        '${_results[i].device.address}'),
+                                                        '${BluetoothMechanisim.macMask(address: _results[i].device.address)}'),
                                                   )),
                                         ),
                                       ),
