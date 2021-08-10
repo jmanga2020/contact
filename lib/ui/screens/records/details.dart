@@ -6,6 +6,7 @@ import 'package:contact_tracing/notifications/notification.dart';
 import 'package:contact_tracing/services/cloud/operations.dart';
 import 'package:contact_tracing/services/metrics/deviceMetrics.dart';
 import 'package:contact_tracing/services/constants/variables.dart';
+import 'package:contact_tracing/services/utils/blue.dart';
 import 'package:contact_tracing/ui/screens/animation/loaders.dart';
 import 'package:contact_tracing/ui/widgets/notification.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class PatientDetails extends StatefulWidget {
 class _PatientDetailsState extends State<PatientDetails> {
   @override
   void initState() {
-    _requestDiscoverable();
+    BluetoothMechanisim.requestDiscoverable();
     _blueInit();
     super.initState();
   }
@@ -58,10 +59,6 @@ class _PatientDetailsState extends State<PatientDetails> {
         _bluetoothState = state;
       });
     });
-  }
-
-  Future<void> _requestDiscoverable({int timeOut = 120}) async {
-    await FlutterBluetoothSerial.instance.requestDiscoverable(timeOut);
   }
 
   List<String> _notificationIds = [];

@@ -5,7 +5,6 @@ import 'package:contact_tracing/services/utils/navigation.dart';
 import 'package:contact_tracing/services/utils/shared.dart';
 import 'package:contact_tracing/ui/screens/regions.dart';
 import 'package:contact_tracing/ui/screens/tabs/homePage.dart';
-import 'package:contact_tracing/ui/screens/tabs/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
@@ -20,22 +19,6 @@ class Home extends StatefulWidget {
 String deviceAddress;
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-
-  Widget _switcher(int i) {
-    switch (i) {
-      case 0:
-        return HomeScreen();
-        break;
-      case 1:
-        return Settings();
-        break;
-      default:
-        return HomeScreen();
-        break;
-    }
-  }
-
   Future<bool> _exit() async {
     bool _ret = false;
     showDialog(
@@ -76,7 +59,6 @@ class _HomeState extends State<Home> {
       });
     });
     if (notify.isEmpty) {
-      print('Notify empty');
       CloudNotifications.initNotifications();
       _getNotificationId().whenComplete(() async {
         if (notificationId.isNotEmpty) {
@@ -90,8 +72,6 @@ class _HomeState extends State<Home> {
           TempMemory.writeString(key: 'notify', value: notificationId);
         }
       });
-    } else {
-      print('Notify $notify');
     }
     super.initState();
   }
@@ -110,19 +90,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _exit(),
-      child: Scaffold(
-        body: _switcher(_currentIndex),
-        bottomNavigationBar: BottomNavigationBar(
-            onTap: (i) => setState(() {
-                  _currentIndex = i;
-                }),
-            currentIndex: _currentIndex,
-            items: [
-              BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-              BottomNavigationBarItem(
-                  label: 'Settings', icon: Icon(Icons.settings))
-            ]),
-      ),
+      child: Scaffold(body: HomeScreen()),
     );
   }
 }
