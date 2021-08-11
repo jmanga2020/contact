@@ -12,6 +12,12 @@ void main(List<String> args) {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Loader());
+    return MaterialApp
+    
+    (
+      theme: ThemeData(
+        fontFamily: 'Nunito'
+      ),
+      debugShowCheckedModeBanner: false, home: Loader());
   }
 }
