@@ -30,26 +30,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     ListTile(
                       leading: Icon(FontAwesomeIcons.headSideMask),
                       title: Text(
-                          'WEAR A MASK, MAKE WEARING A MASK A NORMAL PART OF BEING AROUND OTHER PEOPLE'),
+                        'WEAR A MASK, MAKE WEARING A MASK A NORMAL PART OF BEING AROUND OTHER PEOPLE',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(FontAwesomeIcons.handsWash),
                       title: Text(
-                          'REGULARLY AND THOROUGHLY CLEAN YOUR HANDS WITH AN ALCOHOL BASED HAND RUB OR WASH THEM WITH SOAP AND WATER'),
+                        'REGULARLY AND THOROUGHLY CLEAN YOUR HANDS WITH AN ALCOHOL BASED HAND RUB OR WASH THEM WITH SOAP AND WATER',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(
                         Icons.face_outlined,
                       ),
-                      title: Text('AVOID TOUCHING YOUR EYES,NOSE AND MOUTH'),
+                      title: Text(
+                        'AVOID TOUCHING YOUR EYES,NOSE AND MOUTH',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(FontAwesomeIcons.headSideCoughSlash),
                       title: Text(
-                          'COVER YOUR MOUTH AND NOSE WITH YOUR BENT ELBOW OR TISSUE WHEN YOU COUGH OR SNEEZE'),
+                        'COVER YOUR MOUTH AND NOSE WITH YOUR BENT ELBOW OR TISSUE WHEN YOU COUGH OR SNEEZE',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Divider(),
                     ListTile(
@@ -57,12 +70,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icons.sanitizer_outlined,
                       ),
                       title: Text(
-                          'CLEAN AND DISINFECT SURFACES FREQUENTLY ESPECIALLY THOSE WHICH ARE REGULARLY TOUCHED,SUCH AS DOOR HANDLES,FAUCETS,SHOPPING CARTS,ELEVATOR BUTTONS, PHONE SCREENS'),
+                        'CLEAN AND DISINFECT SURFACES FREQUENTLY ESPECIALLY THOSE WHICH ARE REGULARLY TOUCHED,SUCH AS DOOR HANDLES,FAUCETS,SHOPPING CARTS,ELEVATOR BUTTONS, PHONE SCREENS',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(FontAwesomeIcons.syringe),
-                      title: Text('GET VACCINATED'),
+                      title: Text(
+                        'GET VACCINATED',
+                        style: TextStyle(
+                            fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ],
                 ),
@@ -80,26 +100,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   ListTile(
                     leading: Icon(FontAwesomeIcons.peopleArrows),
                     title: Text(
-                        'MAINTAIN AT LEAST ONE METRE DISTANCE BETWEEN YOURSELF AND OTHERS'),
+                      'MAINTAIN AT LEAST ONE METRE DISTANCE BETWEEN YOURSELF AND OTHERS',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                   Divider(),
                   ListTile(
                     leading: Icon(
                       Icons.reduce_capacity_outlined,
                     ),
-                    title: Text('AVOID CROWDS AND POORLY VENTILATED SPACES'),
+                    title: Text(
+                      'AVOID CROWDS AND POORLY VENTILATED SPACES',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                   Divider(),
                   ListTile(
                     leading: Icon(FlatIcons.home),
                     title: Text(
-                        'STAY HOME AND SELF ISOLATE EVEN IF YOU HAVE MINOR SYMPTOMS SUCH AS COUGH,HEADACHE AND MILD FEVER'),
+                      'STAY HOME AND SELF ISOLATE EVEN IF YOU HAVE MINOR SYMPTOMS SUCH AS COUGH,HEADACHE AND MILD FEVER',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                   Divider(),
                   ListTile(
                     leading: Icon(FontAwesomeIcons.hospital),
                     title: Text(
-                        'IF YOU HAVE A FEVER,COUGH AND DIFFICULTY BREATHING SEEK MEDICAL ATTENTION IMMEDIATELY'),
+                      'IF YOU HAVE A FEVER,COUGH AND DIFFICULTY BREATHING SEEK MEDICAL ATTENTION IMMEDIATELY',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               ),
@@ -118,13 +151,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ListTile(
                     leading: Icon(Icons.notifications),
                     title: Text(
-                        'THE APP GIVES YOU NOTIFICATION ABOUT PEOPLE YOU CAME IN CONTACT WITH AND THEY ARE COVID 19 POSITIVE,WHICH MEANS THEY ARE INFECTED,THE APP ALSO GIVES YOU ALL THE POSSIBLE MEASURES TO FOLLOW INORDER TO PROTECT YOUR SELF AND THE ONES YOU LOVE'),
+                      'THE APP GIVES YOU NOTIFICATION ABOUT PEOPLE WHO ARE INFECTED WITH COVID 19 WITHIN YOUR REGION ,THE APP ALSO GIVES YOU ALL THE POSSIBLE MEASURES TO FOLLOW INORDER TO PROTECT YOUR SELF AND THE ONES YOU LOVE',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                   Divider(),
                   ListTile(
                     leading: Icon(Icons.settings),
                     title: Text(
-                        'THE APP WORKS WHERE BY WHEN YOU INTERACT WITH PEOPLE OR COME INTO CONTACT THERE IS KEY EXCHANGE MECHANISM WHERE BY EACH PERSON WILL HAVE A UNIQUE IDENTITY OF THE SOMEONE HE OR SHE CAME INTO CONTACT WITH AND WAIT FOR THE NOTIFICATION IF HE OR SHE IS INFECTED WITH COVID 19 AND HENCE TO FOLLOW THE MEASURES INSTRUCTED AND BE SAFE.'),
+                      'THE APP  ALSO USES THE BLUETOOTH TECHNOLOGY TO SCAN THE NEARBY DEVICE AND HENCE GIVE OUT THE POSSIBLE RESULTS ON COVID 19 STATUS OF THE NEARBY DEVICE RECORD.',
+                      style: TextStyle(
+                          fontFamily: 'Nunito', fontWeight: FontWeight.w700),
+                    ),
                   ),
                   Divider()
                 ],
@@ -194,7 +233,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       RichText(
                         text: TextSpan(
                           text: index == 3 ? 'Login' : 'Find Out More',
-                          style: TextStyle(color: Colors.blue[400]),
+                          style: TextStyle(
+                              color: Colors.blue[400],
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w700),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => _actions(index),
                         ),
