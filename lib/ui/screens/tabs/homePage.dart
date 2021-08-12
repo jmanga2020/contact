@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flat_icons_flutter/flat_icons_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../auth/logiScreen.dart';
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<Map<String, dynamic>> _previews = [];
   void _actions(int index) {
     switch (index) {
@@ -269,7 +270,13 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         tooltip: 'Detected Infected Patients',
-        child: Icon(FontAwesomeIcons.podcast),
+        child: Shimmer.fromColors(
+            child: Icon(
+              FontAwesomeIcons.podcast,
+              size: DeviceMetrics.deviceWidth(context) / 10,
+            ),
+            baseColor: Colors.white,
+            highlightColor: Colors.blue),
         onPressed: () {
           UserNavigation.push(context, destination: Scanner());
         },

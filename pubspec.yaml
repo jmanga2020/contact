@@ -38,6 +38,7 @@ dependencies:
   flat_icons_flutter: ^1.0.2
   flutter_bluetooth_serial: ^0.3.2
   onesignal_flutter: ^3.1.0
+  shimmer:
 
 
 dev_dependencies:
