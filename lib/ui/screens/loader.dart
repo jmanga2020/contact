@@ -79,7 +79,8 @@ class _LoaderState extends State<Loader> {
             Text(
               'Loading Contents, Please wait ....',
               style:
-                  TextStyle(fontSize: DeviceMetrics.deviceWidth(context) / 25),
+                  TextStyle(
+                    fontSize: DeviceMetrics.deviceWidth(context) / 25),
             )
           ],
         ),

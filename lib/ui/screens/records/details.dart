@@ -61,14 +61,19 @@ class _PatientDetailsState extends State<PatientDetails> {
   List<String> _notificationIds = [];
 
   Future<void> _getNotificationIds() async {
-    FirebaseFirestore.instance.collection('Notifications').get().then((value) {
+    await FirebaseFirestore.instance
+        .collection('Notifications')
+        .get()
+        .then((value) {
       if (value != null) {
         for (var i in value.docs) {
           Map<String, dynamic> _data = i.data();
           if (_data['region'] == _location &&
               //send for all not me!
               _data['bt'] != deviceAddress) {
-            _notificationIds.add(_data['id']);
+            setState(() {
+              _notificationIds.add(_data['id']);
+            });
           }
         }
       }
@@ -130,11 +135,19 @@ class _PatientDetailsState extends State<PatientDetails> {
   }
 
   Future<void> _notify(i) async {
-    await CloudNotifications.sendNotification(
-        userIds: [i],
-        title: 'Covid Patient',
-        sub: 'New user affected in  $_location',
-        body: 'Click for more description');
+    try {
+      await CloudNotifications.sendNotification(
+          userIds: [i],
+          title: 'Covid Patient',
+          sub: 'New user affected in  $_location',
+          body: 'Click for more description');
+    } catch (e) {
+      await CloudNotifications.sendNotification(
+          userIds: [i],
+          title: 'Covid Patient',
+          sub: 'New user affected in  $_location',
+          body: 'Click for more description');
+    }
   }
 
   @override
@@ -162,13 +175,13 @@ class _PatientDetailsState extends State<PatientDetails> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          setState(() {
-                            _loading = true;
-                          });
                           _formKey.currentState.save();
                           try {
                             if (_chosenId.length != 0) {
                               if (_location != null) {
+                                setState(() {
+                                  _loading = true;
+                                });
                                 await CloudOperations.addToCloud(
                                     serverPath:
                                         'Records/${_chosenId['address']}',
@@ -182,11 +195,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                 if (_status == 'Positive') {
                                   await _getNotificationIds();
                                   for (var i in _notificationIds) {
-                                    try {
-                                      _notify(i);
-                                    } catch (e) {
-                                      _notify(i);
-                                    }
+                                    await _notify(i);
                                   }
                                 }
                                 setState(() {
@@ -196,6 +205,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                   _status = null;
                                   _location = null;
                                   _loading = false;
+                                  _notificationIds?.clear();
                                 });
                                 showSnack(context,
                                     content: 'Patient Details Submitted');
